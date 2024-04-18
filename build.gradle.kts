@@ -60,7 +60,6 @@ tasks.test {
 		excludeTestsMatching("*FunctionalTest")
 	}
 
-	finalizedBy(tasks.jacocoTestReport)
 }
 
 tasks.jacocoTestReport {
@@ -71,3 +70,5 @@ tasks.jacocoTestReport {
 		html.outputLocation.set(layout.buildDirectory.dir("jacocoHtml"))
 	}
 }
+
+// try to deploy

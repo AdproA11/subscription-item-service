@@ -14,3 +14,5 @@ RUN ls -al
 COPY ./subscription-item-service-0.0.1-SNAPSHOT.jar /app
 EXPOSE 8080
 CMD ["java","-jar","subscription-item-service-0.0.1-SNAPSHOT.jar"]
+
+# try to deploy
