@@ -4,6 +4,7 @@ import id.ac.ui.cs.advprog.subscriptionitemservice.model.BoxItemsManagement;
 import id.ac.ui.cs.advprog.subscriptionitemservice.service.BoxItemsManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +17,12 @@ public class BoxItemsManagementController {
     @ResponseBody
     public String addItem() {
         return "<h1>Hello World</h1>";
+    }
+
+    @GetMapping("/")
+    public String getAdminPage(Model model) {
+        model.addAttribute("boxes", service.findAll());
+        return "admin";
     }
 
     @Autowired
