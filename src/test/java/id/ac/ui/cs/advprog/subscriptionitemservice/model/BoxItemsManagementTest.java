@@ -10,10 +10,14 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class BoxItemsManagementTest {
     private BoxItemsManagement boxItemsManagement;
+    private Box box;
+    private Item item;
 
     @BeforeEach
     void setUp() {
         boxItemsManagement = new BoxItemsManagement();
+        box = new Box();
+        item = new Item();
     }
 
     @Test
@@ -26,9 +30,9 @@ class BoxItemsManagementTest {
     @Test
     void testAddItemsInBox() {
         Box box = new Box();
-        Items item = new Items();
+        Item item = new Item();
         boxItemsManagement.addBox(box);
-        boxItemsManagement.addItemsInBox(box, item);
+        box.addItem(item);
         assertTrue(box.getArrItem().contains(item));
     }
 
@@ -38,8 +42,8 @@ class BoxItemsManagementTest {
         boxItemsManagement.addBox(box);
         Box newBox = new Box();
         newBox.setId(1);
-        boxItemsManagement.editBox(box, newBox);
-        assertEquals(newBox, boxItemsManagement.getArrBox().get(0));
+        box.editBox(newBox);
+        assertEquals(newBox, box);
     }
 
     @Test
@@ -53,22 +57,21 @@ class BoxItemsManagementTest {
     @Test
     void testEditItemsFromBox() {
         Box box = new Box();
-        Items item = new Items();
+        Item item = new Item();
         boxItemsManagement.addBox(box);
-        boxItemsManagement.addItemsInBox(box, item);
-        Items newItem = new Items();
-        newItem.setId(1);
-        boxItemsManagement.editItemsFromBox(box, item, newItem);
-        assertEquals(newItem, box.getArrItem().get(0));
+        box.addItem(item);
+        Item newItem = new Item();
+        box.getArrItem().get(1).editItem(item);
+        assertEquals(newItem, box);
     }
 
     @Test
     void testDeleteItemsFromBox() {
         Box box = new Box();
-        Items item = new Items();
+        Item item = new Item();
         boxItemsManagement.addBox(box);
-        boxItemsManagement.addItemsInBox(box, item);
-        boxItemsManagement.deleteItemsFromBox(box, item);
+        box.addItem(item);
+        box.deleteItem(item);
         assertFalse(box.getArrItem().contains(item));
     }
 }
