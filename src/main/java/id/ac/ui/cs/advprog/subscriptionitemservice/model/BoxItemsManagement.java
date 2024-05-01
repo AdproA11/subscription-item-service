@@ -40,6 +40,10 @@ class Box {
         this.description = newBox.getDescription();
         this.price = newBox.getPrice();
     }
+
+    public ArrayList<Box> listAllBoxes() {
+        return this.getArrBox();
+    }
 }
 
 @Getter @Setter
@@ -51,6 +55,10 @@ class Item {
     public void editItem(Item newItem) {
         this.name = newItem.getName();
         this.amount = newItem.getAmount();
+    }
+
+    public ArrayList<Item> listAllItems() {
+        return this.getArrItem();
     }
 }
 // recommit to new branch

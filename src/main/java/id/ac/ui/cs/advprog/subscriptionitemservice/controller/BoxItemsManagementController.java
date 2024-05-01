@@ -1,14 +1,14 @@
 package id.ac.ui.cs.advprog.subscriptionitemservice.controller;
 
 import id.ac.ui.cs.advprog.subscriptionitemservice.model.BoxItemsManagement;
+import id.ac.ui.cs.advprog.subscriptionitemservice.model.Item;
 import id.ac.ui.cs.advprog.subscriptionitemservice.service.BoxItemsManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+
+import javax.swing.*;
 
 @Controller
 @RequestMapping("/admin")
@@ -39,5 +39,20 @@ public class BoxItemsManagementController {
     public String addBoxPost(BoxItemsManagement boxItem) {
         service.save(boxItem);
         return "redirect:/admin/";
+    }
+
+    @GetMapping("/listAllBoxes")
+    public String listAllBoxes(Model model) {
+        List<Box> boxes = service.findAll();
+        model.addAttribute("boxes", boxes);
+        return "listAllBoxes";
+    }
+
+    @GetMapping("/listAllItems/{boxId}")
+    public String listAllItems(@PathVariable Long boxId, Model model) {
+        Box box = service.findById(boxId);
+        List<Item> items = box.getArrItem();
+        model.addAttribute("items", items);
+        return "listAllItems";
     }
 }
