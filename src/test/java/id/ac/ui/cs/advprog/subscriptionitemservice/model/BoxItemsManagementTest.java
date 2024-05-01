@@ -5,8 +5,11 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 class BoxItemsManagementTest {
     private BoxItemsManagement boxItemsManagement;
@@ -74,5 +77,26 @@ class BoxItemsManagementTest {
         box.deleteItem(item);
         assertFalse(box.getArrItem().contains(item));
     }
+
+    @Test
+    void testGetAllBoxes() {
+        boxItemsManagement.addBox(box1);
+        boxItemsManagement.addBox(box2);
+
+        ArrayList<Box> boxes = boxItemsManagement.getArrBox();
+
+        assertTrue(boxes.contains(box1));
+        assertTrue(boxes.contains(box2));
+    }
+
+    @Test
+    void testGetAllItems() {
+        box.addItem(item1);
+        box.addItem(item2);
+
+        ArrayList<Item> items = box.getArrItem();
+
+        assertTrue(items.contains(item1));
+        assertTrue(items.contains(item2));
+    }
 }
-// recommit to new branch
