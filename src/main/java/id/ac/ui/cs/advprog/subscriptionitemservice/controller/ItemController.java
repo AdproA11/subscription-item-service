@@ -1,13 +1,14 @@
-package id.ac.ui.cs.advprog.subscriptionitemservice.controller;
-
 @RestController
-@RequestMapping("/api/items")
+@RequestMapping("/items")
 public class ItemController {
+
     @Autowired
     private ItemService itemService;
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<Item> createItem(@RequestBody Item item) {
-        return new ResponseEntity<>(itemService.saveItem(item), HttpStatus.CREATED);
+        Item createdItem = itemService.createItem(item);
+        return new ResponseEntity<>(createdItem, HttpStatus.CREATED);
     }
+
 }
