@@ -1,22 +1,33 @@
-package id.ac.ui.cs.advprog.subscriptionitemservice.model;
+package id.ac.ui.cs.advprog.subsmanagementservice.model;
 
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Getter @Setter
+import java.util.ArrayList;
+import java.util.List;
+
+@Setter
+@Getter
 @Entity
-@Table(name = "subscription_boxes")
 public class SubscriptionBox {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(nullable = false)
     private String name;
+    private String description;
+    private Double price;
 
-    @Enumerated(EnumType.STRING)
-    private BoxType type;
 
-    @OneToMany(mappedBy = "subscriptionBox", cascade = CascadeType.ALL)
-    private Set<Item> items = new HashSet<>();
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Item> items = new ArrayList<>();
+
+    public SubscriptionBox() {
+    }
+
+    public SubscriptionBox(String name, String description, double price) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+    }
 }
