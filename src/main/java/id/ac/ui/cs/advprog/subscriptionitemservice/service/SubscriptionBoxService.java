@@ -5,7 +5,7 @@ public class SubscriptionBoxService {
     @Autowired
     private SubscriptionBoxRepository subscriptionBoxRepository;
 
-    public SubscriptionBox saveSubscriptionBox(SubscriptionBox subscriptionBox) {
+    public Box saveSubscriptionBox(Box subscriptionBox) {
         return subscriptionBoxRepository.save(subscriptionBox);
     }
 }

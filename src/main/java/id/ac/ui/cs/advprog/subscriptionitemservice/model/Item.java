@@ -1,26 +1,29 @@
-package id.ac.ui.cs.advprog.subsmanagementservice.model;
+package id.ac.ui.cs.advprog.subscriptionitemservice.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-@Setter
+import java.util.ArrayList;
+import java.util.List;
+
 @Getter
+@Setter
 @Entity
 public class Item {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String description;
 
-    public Item() {
-    }
+    @ManyToMany(mappedBy = "items", fetch = FetchType.LAZY)
+    private List<Box> boxes = new ArrayList<>();
 
-    public Item(String name) {
+    public Item() {}
+
+    public Item(String name, String description) {
         this.name = name;
+        this.description = description;
     }
-
 }

@@ -1,6 +1,6 @@
 package id.ac.ui.cs.advprog.subscriptionitemservice.controller;
 
-import id.ac.ui.cs.advprog.subscriptionitemservice.model.BoxItemsManagement;
+import id.ac.ui.cs.advprog.subscriptionitemservice.model.BoxItem;
 import id.ac.ui.cs.advprog.subscriptionitemservice.model.Item;
 import id.ac.ui.cs.advprog.subscriptionitemservice.service.BoxItemsManagementService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,13 +30,13 @@ public class BoxItemsManagementController {
 
     @GetMapping("/addBox")
     public String addBox() {
-        BoxItemsManagement newBoxItem = new BoxItem();
+        BoxItem newBoxItem = new BoxItem();
         model.addAttribute("boxItem", newBoxItem);
         return "addBox";
     }
 
     @PostMapping("/addBox")
-    public String addBoxPost(BoxItemsManagement boxItem) {
+    public String addBoxPost(BoxItem boxItem) {
         service.save(boxItem);
         return "redirect:/admin/";
     }

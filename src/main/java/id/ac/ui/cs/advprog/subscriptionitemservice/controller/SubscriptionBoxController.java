@@ -7,7 +7,7 @@ public class SubscriptionBoxController {
     private SubscriptionBoxService subscriptionBoxService;
 
     @PostMapping("/")
-    public ResponseEntity<SubscriptionBox> createSubscriptionBox(@RequestBody SubscriptionBox subscriptionBox) {
+    public ResponseEntity<Box> createSubscriptionBox(@RequestBody Box subscriptionBox) {
         return new ResponseEntity<>(subscriptionBoxService.saveSubscriptionBox(subscriptionBox), HttpStatus.CREATED);
     }
 }

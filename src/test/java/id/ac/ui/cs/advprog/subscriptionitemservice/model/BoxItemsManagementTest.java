@@ -12,13 +12,13 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 class BoxItemsManagementTest {
-    private BoxItemsManagement boxItemsManagement;
+    private BoxItem boxItemsManagement;
     private Box box;
     private Item item;
 
     @BeforeEach
     void setUp() {
-        boxItemsManagement = new BoxItemsManagement();
+        boxItemsManagement = new BoxItem();
         box = new Box();
         item = new Item();
     }
