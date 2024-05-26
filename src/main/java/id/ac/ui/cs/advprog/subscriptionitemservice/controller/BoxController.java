@@ -16,7 +16,7 @@ public class BoxController {
     @Autowired
     private BoxService boxService;
 
-    @PostMapping("/")
+    @PostMapping("/create")
     public CompletableFuture<ResponseEntity<Box>> createBox(@RequestBody Box box) {
         return boxService.createBox(box)
                 .thenApply(ResponseEntity::ok);
