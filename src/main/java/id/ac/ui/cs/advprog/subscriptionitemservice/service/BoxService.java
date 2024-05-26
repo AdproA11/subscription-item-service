@@ -6,9 +6,9 @@ import id.ac.ui.cs.advprog.subscriptionitemservice.repository.BoxRepository;
 import id.ac.ui.cs.advprog.subscriptionitemservice.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.stream.Collectors;
 
 @Service
 public class BoxService {
@@ -18,36 +18,31 @@ public class BoxService {
     @Autowired
     private ItemRepository itemRepository;
 
-    public CompletableFuture<Box> createBox(Box box) {
-        return CompletableFuture.supplyAsync(() -> boxRepository.save(box));
-    }
-
-    public CompletableFuture<Void> deleteBox(Long boxId) {
-        return CompletableFuture.runAsync(() -> boxRepository.deleteById(boxId));
-    }
-
-    public CompletableFuture<Box> updateBox(Long boxId, Box newBox) {
+    public CompletableFuture<Box> createOrUpdateBox(Box box) {
         return CompletableFuture.supplyAsync(() -> {
-            return boxRepository.findById(boxId).map(box -> {
-                box.setName(newBox.getName());
-                box.setDescription(newBox.getDescription());
-                box.setPrice(newBox.getPrice());
-                box.setItems(newBox.getItems());
-                return boxRepository.save(box);
-            }).orElseThrow(() -> new RuntimeException("Box tidak ditemukan"));
-        });
-    }
-
-    public CompletableFuture<Box> addItemsToBox(Long boxId, List<Item> items) {
-        return CompletableFuture.supplyAsync(() -> {
-            Box box = boxRepository.findById(boxId).orElseThrow(() -> new RuntimeException("Box tidak ditemukan"));
-            items.forEach(box::addItem);
+            List<Item> managedItems = box.getItems().stream()
+                .map(item -> {
+                    if (item.getId() != null && itemRepository.existsById(item.getId())) {
+                        Item existingItem = itemRepository.findById(item.getId()).get();
+                        existingItem.setName(item.getName());
+                        existingItem.setDescription(item.getDescription());
+                        return itemRepository.save(existingItem); 
+                    } else {
+                        return itemRepository.save(item); 
+                    }
+                })
+                .collect(Collectors.toList());
+            box.setItems(managedItems);
             return boxRepository.save(box);
         });
     }
 
-    public Box saveSubscriptionBox(Box subscriptionBox) {
-        return boxRepository.save(subscriptionBox);
+    public CompletableFuture<Void> deleteBox(Long id) {
+        return CompletableFuture.runAsync(() -> {
+            if (boxRepository.existsById(id)) {
+                boxRepository.deleteById(id);
+            }
+        });
     }
 
     public List<Box> getAllBoxes() {
