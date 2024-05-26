@@ -4,9 +4,6 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Getter
 @Setter
 @Entity
@@ -17,10 +14,8 @@ public class Item {
     private String name;
     private String description;
 
-    @ManyToMany(mappedBy = "items", fetch = FetchType.LAZY)
-    private List<Box> boxes = new ArrayList<>();
-
-    public Item() {}
+    public Item() {
+    }
 
     public Item(String name, String description) {
         this.name = name;

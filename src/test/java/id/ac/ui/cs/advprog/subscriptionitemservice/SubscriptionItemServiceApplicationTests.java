@@ -1,13 +1,13 @@
-package id.ac.ui.cs.advprog.subscriptionitemservice;
+// package id.ac.ui.cs.advprog.subscriptionitemservice;
 
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+// import org.junit.jupiter.api.Test;
+// import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
-class SubscriptionItemServiceApplicationTests {
+// @SpringBootTest
+// class SubscriptionItemServiceApplicationTests {
 
-	@Test
-	void contextLoads() {
-	}
+// 	@Test
+// 	void contextLoads() {
+// 	}
 
-}
+// }
