@@ -1,11 +1,13 @@
 package id.ac.ui.cs.advprog.subscriptionitemservice.controller;
 
+import id.ac.ui.cs.advprog.subscriptionitemservice.model.Box;
 import id.ac.ui.cs.advprog.subscriptionitemservice.model.Item;
 import id.ac.ui.cs.advprog.subscriptionitemservice.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @RestController
@@ -30,5 +32,11 @@ public class ItemController {
     public CompletableFuture<ResponseEntity<Item>> updateItem(@PathVariable Long id, @RequestBody Item item) {
         return itemService.updateItem(id, item)
                 .thenApply(ResponseEntity::ok);
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<Item>> getAllItems() {
+        List<Item> items = itemService.getAllItems();
+        return ResponseEntity.ok(items);
     }
 }

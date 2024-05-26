@@ -1,10 +1,12 @@
 package id.ac.ui.cs.advprog.subscriptionitemservice.service;
 
+import id.ac.ui.cs.advprog.subscriptionitemservice.model.Box;
 import id.ac.ui.cs.advprog.subscriptionitemservice.model.Item;
 import id.ac.ui.cs.advprog.subscriptionitemservice.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 @Service
@@ -29,5 +31,9 @@ public class ItemService {
                 return itemRepository.save(item);
             }).orElseThrow(() -> new RuntimeException("Item not found"));
         });
+    }
+
+    public List<Item> getAllItems() {
+        return itemRepository.findAll();
     }
 }
