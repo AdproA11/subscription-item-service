@@ -1,11 +1,9 @@
 package id.ac.ui.cs.advprog.subscriptionitemservice.controller;
 
-import id.ac.ui.cs.advprog.subscriptionitemservice.model.Box;
 import id.ac.ui.cs.advprog.subscriptionitemservice.model.Item;
 import id.ac.ui.cs.advprog.subscriptionitemservice.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,10 +21,16 @@ public class ItemController {
                 .thenApply(ResponseEntity::ok);
     }
 
+    @PutMapping("/{id}")
+    public CompletableFuture<ResponseEntity<Item>> updateItem(@PathVariable Long id, @RequestBody Item item) {
+        return itemService.updateItem(id, item)
+                .thenApply(ResponseEntity::ok);
+    }
+
     @DeleteMapping("/{id}/delete")
-    public CompletableFuture<ResponseEntity<Item>> deleteItem(@PathVariable Long id) {
-        itemService.deleteItem(id);
-        return CompletableFuture.completedFuture(ResponseEntity.ok().build());
+    public CompletableFuture<ResponseEntity<Void>> deleteItem(@PathVariable Long id) {
+        return itemService.deleteItem(id)
+                .thenApply(v -> ResponseEntity.noContent().<Void>build());
     }
 
     @GetMapping("/all")
@@ -36,23 +40,8 @@ public class ItemController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Item> getItembyId(@PathVariable Long id) {
-        List<Item> items = itemService.getAllItems();
-        for (Item item : items) {
-            if (item.getId() == id) {
-                return ResponseEntity.ok(item);
-            }
-        }
-        Item itemObj = items.get(Math.toIntExact(id));
-        return ResponseEntity.ok(itemObj);
+    public ResponseEntity<Item> getItemById(@PathVariable Long id) {
+        Item item = itemService.getItemById(id);
+        return ResponseEntity.ok(item);
     }
-
-    // @DeleteMapping("/{id}/delete")
-    // public ResponseEntity<Void> deleteItem(Long id) {
-    //     // itemService.deleteItem(id);
-    //     // return ResponseEntity.ok().build();
-    //     Item item = getItem(id);
-    //     itemService.deleteItem(item);
-    //     return ResponseEntity.ok();
-    // }
 }
